@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -22,13 +22,10 @@ func ReadElfCalories(filename string) [][]int {
 		line := input.Text()
 
 		if line == "" {
-			fmt.Println("Blank!")
 			elf_calories = append(elf_calories, single_elf)
 			single_elf = []int{}
 		} else {
-			fmt.Println(line)
 			theInt, _ := strconv.Atoi(input.Text())
-
 			single_elf = append(single_elf, theInt)
 		}
 	}
@@ -50,4 +47,28 @@ func Day01aSolution(calories [][]int) int {
 	}
 
 	return largest_total
+}
+
+func CaloriesToTotalCalories(elf_calories [][]int) []int {
+	totals := []int{}
+
+	for _, cals := range elf_calories {
+		total := 0
+		for _, cal := range cals {
+			total += cal
+		}
+		totals = append(totals, total)
+	}
+
+	return totals
+}
+
+func Day01bSolution(elf_calories [][]int) int {
+
+	total_calories := CaloriesToTotalCalories(elf_calories)
+
+	// we use greater than as the less than function to sort descending
+	sort.Slice(total_calories, func(i, j int) bool { return total_calories[i] > total_calories[j] })
+
+	return total_calories[0] + total_calories[1] + total_calories[2]
 }
