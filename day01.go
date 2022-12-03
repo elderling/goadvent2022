@@ -35,3 +35,19 @@ func ReadElfCalories(filename string) [][]int {
 
 	return elf_calories
 }
+
+func Day01aSolution(calories [][]int) int {
+	largest_total := 0
+
+	for _, elf := range calories {
+		subtotal := 0
+		for _, cals := range elf {
+			subtotal += cals
+		}
+		if subtotal > largest_total {
+			largest_total = subtotal
+		}
+	}
+
+	return largest_total
+}
