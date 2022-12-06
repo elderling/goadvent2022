@@ -6,4 +6,5 @@ func main() {
 	fmt.Println("Merry Christmas!")
 	fmt.Printf("Day 01a Solution: %v\n", Day01aSolution(ReadElfCalories("my_day01a_data.txt")))
 	fmt.Printf("Day 01b Solution: %v\n", Day01bSolution(ReadElfCalories("my_day01a_data.txt")))
+	fmt.Printf("Day 02a Solution: %v\n", Day02aSolution("my_day02a_data.txt"))
 }
