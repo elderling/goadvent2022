@@ -13,9 +13,9 @@ const (
 )
 
 const (
-	PLAYER1 = iota
-	PLAYER2 = iota
-	DRAW    = iota
+	OPPONENT = iota
+	ME       = iota
+	DRAW     = iota
 )
 
 func LookupRPSByLetter(letter string) int {
@@ -32,21 +32,35 @@ func LookupRPSByLetter(letter string) int {
 	panic("Invalid letter")
 }
 
-func RPSWinner(player1, player2 int) int {
+func LookupOutcomeByLetter(letter string) int {
+	if letter == "X" {
+		return OPPONENT
+	}
+	if letter == "Y" {
+		return DRAW
+	}
+	if letter == "Z" {
+		return ME
+	}
+
+	panic("Invalid letter")
+}
+
+func RPSWinner(opponent, me int) int {
 	lookup := [3][3]int{}
 	lookup[ROCK][ROCK] = DRAW
-	lookup[ROCK][PAPER] = PLAYER2
-	lookup[ROCK][SCISORS] = PLAYER1
+	lookup[ROCK][PAPER] = ME
+	lookup[ROCK][SCISORS] = OPPONENT
 
-	lookup[PAPER][ROCK] = PLAYER1
+	lookup[PAPER][ROCK] = OPPONENT
 	lookup[PAPER][PAPER] = DRAW
-	lookup[PAPER][SCISORS] = PLAYER2
+	lookup[PAPER][SCISORS] = ME
 
-	lookup[SCISORS][ROCK] = PLAYER2
-	lookup[SCISORS][PAPER] = PLAYER1
+	lookup[SCISORS][ROCK] = ME
+	lookup[SCISORS][PAPER] = OPPONENT
 	lookup[SCISORS][SCISORS] = DRAW
 
-	return lookup[player1][player2]
+	return lookup[opponent][me]
 }
 
 func ReadRPSGames(filename string) []string {
@@ -72,18 +86,46 @@ func ScoreRPSGames(games []string) int {
 
 	for _, game := range games {
 		letters := strings.Split(game, " ")
-		player1 := LookupRPSByLetter(letters[0])
+		opponent_shape := LookupRPSByLetter(letters[0])
 
-		player2 := LookupRPSByLetter(letters[1])
+		me_shape := LookupRPSByLetter(letters[1])
 
-		total += RPSShapeScore(player2)
+		total += RPSShapeScore(me_shape)
 
-		winner := RPSWinner(player1, player2)
+		winner := RPSWinner(opponent_shape, me_shape)
 
-		if winner == PLAYER2 {
+		if winner == ME {
 			total += 6
 		}
-		if winner == PLAYER1 {
+		if winner == OPPONENT {
+			total += 0
+		}
+		if winner == DRAW {
+			total += 3
+		}
+	}
+
+	return total
+}
+
+func ScoreRPSDay02b(games []string) int {
+	total := 0
+
+	for _, game := range games {
+		letters := strings.Split(game, " ")
+
+		opponent_shape := LookupRPSByLetter(letters[0])
+
+		me_shape := SelectRPSShapeForOutcome(opponent_shape, LookupOutcomeByLetter(letters[1]))
+
+		winner := RPSWinner(opponent_shape, me_shape)
+
+		total += RPSShapeScore(me_shape)
+
+		if winner == ME {
+			total += 6
+		}
+		if winner == OPPONENT {
 			total += 0
 		}
 		if winner == DRAW {
@@ -112,4 +154,41 @@ func Day02aSolution(filename string) int {
 	games := ReadRPSGames(filename)
 
 	return ScoreRPSGames(games)
+}
+
+func Day02bSolution(filename string) int {
+	games := ReadRPSGames(filename)
+
+	return ScoreRPSDay02b(games)
+}
+func SelectRPSShapeForOutcome(opponent_shape, outcome int) int {
+	if opponent_shape == ROCK && outcome == DRAW {
+		return ROCK
+	}
+	if opponent_shape == ROCK && outcome == ME {
+		return PAPER
+	}
+	if opponent_shape == ROCK && outcome == OPPONENT {
+		return SCISORS
+	}
+	if opponent_shape == PAPER && outcome == DRAW {
+		return PAPER
+	}
+	if opponent_shape == PAPER && outcome == ME {
+		return SCISORS
+	}
+	if opponent_shape == PAPER && outcome == OPPONENT {
+		return ROCK
+	}
+	if opponent_shape == SCISORS && outcome == DRAW {
+		return SCISORS
+	}
+	if opponent_shape == SCISORS && outcome == ME {
+		return ROCK
+	}
+	if opponent_shape == SCISORS && outcome == OPPONENT {
+		return PAPER
+	}
+
+	panic("Invalid shape or outcome")
 }
