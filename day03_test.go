@@ -15,3 +15,17 @@ func TestReadRucksackStrings(t *testing.T) {
 		t.Error("Last line not read properly")
 	}
 }
+
+func TestStringToRuckSack(t *testing.T) {
+	s := "vJrwpWtwJgWrhcsFMMfFFhFp"
+
+	rs := StringToRucksack(s)
+
+	if string(rs.CompartmentA) != "vJrwpWtwJgWr" {
+		t.Error("Compartment A is busted")
+	}
+
+	if string(rs.CompartmentB) != "hcsFMMfFFhFp" {
+		t.Error("Compartment B is busted")
+	}
+}

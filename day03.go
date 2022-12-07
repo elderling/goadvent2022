@@ -5,6 +5,11 @@ import (
 	"os"
 )
 
+type Rucksack struct {
+	CompartmentA []byte
+	CompartmentB []byte
+}
+
 func ReadRucksackStrings(filename string) []string {
 	rucksacks := []string{}
 
@@ -22,4 +27,18 @@ func ReadRucksackStrings(filename string) []string {
 
 	return rucksacks
 
+}
+
+func StringToRucksack(s string) Rucksack {
+	rs := Rucksack{}
+
+	half := len(s) / 2
+
+	cA := s[0:half]
+	cB := s[half:]
+
+	rs.CompartmentA = []byte(cA)
+	rs.CompartmentB = []byte(cB)
+
+	return rs
 }
