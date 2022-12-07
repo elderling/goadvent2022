@@ -63,3 +63,12 @@ func FindRucksackDuplicate(rucksack *Rucksack) byte {
 
 	return return_val
 }
+
+func RuckSackItemPriority(item byte) int {
+
+	if item > 96 {
+		return int(item - 96)
+	} else {
+		return int(item - 65 + 27)
+	}
+}

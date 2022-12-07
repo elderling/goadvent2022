@@ -41,3 +41,14 @@ func TestFindRucksackDuplicate(t *testing.T) {
 		t.Error("Duplicate broken")
 	}
 }
+
+func TestRucksackItemPriority(t *testing.T) {
+
+	if RuckSackItemPriority(byte('a')) != 1 {
+		t.Error("Priority of 'a' is Broken")
+	}
+
+	if RuckSackItemPriority(byte('A')) != 27 {
+		t.Error("Priority of 'A' is Broken")
+	}
+}
