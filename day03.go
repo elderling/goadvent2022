@@ -42,3 +42,24 @@ func StringToRucksack(s string) Rucksack {
 
 	return rs
 }
+
+func FindRucksackDuplicate(rucksack *Rucksack) byte {
+	dupfinder := map[byte]int{}
+
+	for _, v := range rucksack.CompartmentA {
+		dupfinder[v]++
+	}
+	for _, v := range rucksack.CompartmentB {
+		dupfinder[v]++
+	}
+
+	var return_val = byte(0)
+	for k, v := range dupfinder {
+		if v > 1 {
+			return_val = k
+			break
+		}
+	}
+
+	return return_val
+}

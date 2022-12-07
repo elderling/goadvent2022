@@ -29,3 +29,15 @@ func TestStringToRuckSack(t *testing.T) {
 		t.Error("Compartment B is busted")
 	}
 }
+
+func TestFindRucksackDuplicate(t *testing.T) {
+	s := "vJrwpWtwJgWrhcsFMMfFFhFp"
+
+	rs := StringToRucksack(s)
+
+	duplicate := FindRucksackDuplicate(&rs)
+
+	if string(duplicate) != "p" {
+		t.Error("Duplicate broken")
+	}
+}
