@@ -62,3 +62,36 @@ func TestDay03aSolution(t *testing.T) {
 		t.Error("Day3aSolution() is broken")
 	}
 }
+
+func TestRucksocksToBadgeGroups(t *testing.T) {
+	sack_strings := ReadRucksackStrings("test_data_day03a.txt")
+	sacks := StringsToRucksacks(sack_strings)
+
+	groups := RucksacksToBadgeGroups(sacks)
+
+	if string(groups[0].Rucksacks[0].CompartmentA) != "vJrwpWtwJgWr" {
+		t.Error("Group 0, Rucksacks[0] is broken")
+	}
+}
+
+func TestBadgeGroupIntersection(t *testing.T) {
+	sack_strings := ReadRucksackStrings("test_data_day03a.txt")
+	sacks := StringsToRucksacks(sack_strings)
+
+	groups := RucksacksToBadgeGroups(sacks)
+
+	intersection := BadgeGroupIntersection(&groups[0])
+
+	if intersection != byte('r') {
+		t.Error("Intersection is busted")
+	}
+
+}
+
+func TestDay03bSolution(t *testing.T) {
+	solution := Day03bSolution("test_data_day03a.txt")
+
+	if solution != 70 {
+		t.Error("Day 03b solution is busted")
+	}
+}
