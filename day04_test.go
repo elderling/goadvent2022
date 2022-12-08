@@ -39,3 +39,39 @@ func TestDay04aSolution(t *testing.T) {
 		t.Error("Broken Day04aSolution")
 	}
 }
+
+func TestOverlaps(t *testing.T) {
+	section1 := Section{
+		start: 2,
+		end:   4,
+	}
+
+	section2 := Section{
+		start: 4,
+		end:   5,
+	}
+
+	if !section1.Overlaps(section2) {
+		t.Error("Overlaps is busted")
+	}
+
+	if !section2.Overlaps(section1) {
+		t.Error("Overlaps is busted")
+	}
+
+	section1.start = 1
+	section1.end = 2
+
+	if section1.Overlaps(section2) {
+		t.Error("Overlaps is busted")
+	}
+
+}
+
+func TestDay04bSolution(t *testing.T) {
+	sol := Day04bSolution("test_data_day04a.txt")
+
+	if sol != 4 {
+		t.Error("Day 04 Solution is busted")
+	}
+}

@@ -11,4 +11,5 @@ func main() {
 	fmt.Printf("Day 03a Solution: %v\n", Day03aSolution("my_day03a_data.txt"))
 	fmt.Printf("Day 03b Solution: %v\n", Day03bSolution("my_day03a_data.txt"))
 	fmt.Printf("Day 04a Solution: %v\n", Day04aSolution("my_day04a_data.txt"))
+	fmt.Printf("Day 04b Solution: %v\n", Day04bSolution("my_day04a_data.txt"))
 }

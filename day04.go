@@ -34,6 +34,23 @@ func (section1 Section) FullyContains(section2 Section) bool {
 	}
 }
 
+func (section1 Section) Overlaps(section2 Section) bool {
+	if section1.start >= section2.start && section1.start <= section2.end {
+		return true
+	}
+	if section1.end >= section2.start && section1.end <= section2.end {
+		return true
+	}
+	if section2.start >= section1.start && section2.start <= section1.end {
+		return true
+	}
+	if section2.end >= section1.start && section2.end <= section1.end {
+		return true
+	}
+
+	return false
+}
+
 func Day04aSolution(filename string) int {
 	f, err := os.Open(filename)
 
@@ -53,6 +70,32 @@ func Day04aSolution(filename string) int {
 		section2 := StringToSection(sections[1])
 
 		if section1.FullyContains(section2) || section2.FullyContains(section1) {
+			total++
+		}
+	}
+
+	return total
+}
+
+func Day04bSolution(filename string) int {
+	f, err := os.Open(filename)
+
+	if err != nil {
+		panic("Bad filename")
+	}
+
+	input := bufio.NewScanner(f)
+
+	total := 0
+	for input.Scan() {
+		line := input.Text()
+
+		sections := strings.Split(line, ",")
+
+		section1 := StringToSection(sections[0])
+		section2 := StringToSection(sections[1])
+
+		if section1.Overlaps(section2) {
 			total++
 		}
 	}
