@@ -51,4 +51,14 @@ func TestRucksackItemPriority(t *testing.T) {
 	if RuckSackItemPriority(byte('A')) != 27 {
 		t.Error("Priority of 'A' is Broken")
 	}
+
+	if RuckSackItemPriority(byte('Z')) != 27+25 {
+		t.Error("Priority of 'Z' is Broken")
+	}
+}
+
+func TestDay03aSolution(t *testing.T) {
+	if Day03aSolution("test_data_day03a.txt") != 157 {
+		t.Error("Day3aSolution() is broken")
+	}
 }

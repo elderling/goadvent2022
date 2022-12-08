@@ -49,14 +49,14 @@ func FindRucksackDuplicate(rucksack *Rucksack) byte {
 	for _, v := range rucksack.CompartmentA {
 		dupfinder[v]++
 	}
-	for _, v := range rucksack.CompartmentB {
-		dupfinder[v]++
-	}
 
 	var return_val = byte(0)
-	for k, v := range dupfinder {
-		if v > 1 {
-			return_val = k
+
+	for _, v := range rucksack.CompartmentB {
+		_, exists := dupfinder[v]
+
+		if exists {
+			return_val = v
 			break
 		}
 	}
@@ -71,4 +71,22 @@ func RuckSackItemPriority(item byte) int {
 	} else {
 		return int(item - 65 + 27)
 	}
+}
+
+func Day03aSolution(filename string) int {
+	rs_strings := ReadRucksackStrings(filename)
+
+	total := 0
+
+	for _, v := range rs_strings {
+		rs := StringToRucksack(v)
+
+		dup := FindRucksackDuplicate(&rs)
+
+		priority := RuckSackItemPriority(dup)
+
+		total += priority
+	}
+
+	return total
 }
